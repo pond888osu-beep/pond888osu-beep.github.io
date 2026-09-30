@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personality Profile ♡</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Itim&family=Press+Start+2P&display=swap');
+
+  :root{
+    --pink:#ffb9ed;
+    --pink2:#ff8ddd;
+    --deep:#a40091;
+    --purple:#c96bc8;
+    --white:#fffaff;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+
+  body{
+    margin:0;
+    min-height:100vh;
+    color:var(--white);
+    font-family:"Itim", system-ui, sans-serif;
+    background:
+      radial-gradient(circle at 15% 10%, rgba(255,255,255,.16) 0 2px, transparent 3px),
+      radial-gradient(circle at 85% 30%, rgba(255,255,255,.12) 0 2px, transparent 3px),
+      linear-gradient(145deg,#9b008e,#b4009d 48%,#8e007f);
+    background-size:110px 110px,150px 150px,100% 100%;
+    overflow-x:hidden;
+  }
+
+  .wrap{
+    width:min(920px,94vw);
+    margin:28px auto 50px;
+  }
+
+  .hero{
+    position:relative;
+    min-height:190px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    margin-bottom:20px;
+  }
+
+  .hero-box{
+    width:100%;
+    padding:35px 25px;
+    border:5px solid #fff;
+    border-radius:34px;
+    background:rgba(255,250,255,.96);
+    color:var(--pink2);
+    box-shadow:
+      0 0 0 3px #ff9ee7,
+      0 0 22px rgba(255,180,238,.8);
+    position:relative;
+  }
+
+  .hero-box:before,.hero-box:after{
+    content:"✦";
+    position:absolute;
+    color:#fff;
+    background:var(--pink2);
+    border:4px solid #fff;
+    border-radius:50%;
+    width:30px;height:30px;
+    line-height:22px;
+    font-size:18px;
+    top:50%;
+    transform:translateY(-50%);
+  }
+  .hero-box:before{left:-18px}
+  .hero-box:after{right:-18px}
+
+  h1{
+    margin:0;
+    font-family:"Press Start 2P",monospace;
+    font-size:clamp(20px,4vw,38px);
+    letter-spacing:1px;
+    text-shadow:2px 2px 0 #fff;
+  }
+
+  .subtitle{
+    margin-top:14px;
+    font-size:1.15rem;
+    color:#d46bca;
+  }
+
+  .silhouette{
+    position:absolute;
+    right:-4%;
+    top:0;
+    width:48%;
+    height:100%;
+    opacity:.20;
+    pointer-events:none;
+    background:
+      radial-gradient(ellipse at 55% 25%, #fff 0 11%, transparent 12%),
+      radial-gradient(ellipse at 55% 62%, #fff 0 24%, transparent 25%),
+      radial-gradient(ellipse at 45% 88%, #fff 0 28%, transparent 29%);
+    filter:blur(1px);
+    transform:rotate(-8deg);
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+  }
+
+  .card{
+    position:relative;
+    background:rgba(120,0,105,.36);
+    border:3px solid rgba(255,255,255,.9);
+    border-radius:24px;
+    padding:22px 22px 20px;
+    box-shadow:0 8px 0 rgba(79,0,68,.22),0 0 18px rgba(255,165,239,.16);
+    backdrop-filter:blur(4px);
+    transition:.25s ease;
+    overflow:hidden;
+  }
+
+  .card:hover{
+    transform:translateY(-5px) rotate(.5deg);
+    box-shadow:0 12px 0 rgba(79,0,68,.2),0 0 26px rgba(255,180,242,.3);
+  }
+
+  .card.full{grid-column:1/-1}
+
+  .card h2{
+    margin:0 0 14px;
+    font-size:1.5rem;
+    color:#fff;
+  }
+
+  .line{
+    display:block;
+    margin:9px 0;
+    font-size:1.12rem;
+    line-height:1.45;
+    text-shadow:2px 2px 0 rgba(130,0,112,.55);
+  }
+
+  .label{color:#ffd5f5;font-weight:bold}
+  .value{color:#fff}
+
+  .summary{
+    margin-top:18px;
+    background:#fffaff;
+    color:#d66bcf;
+    border:5px solid #fff;
+    border-radius:28px;
+    padding:25px;
+    box-shadow:0 0 0 3px #ff9ee7,0 0 25px rgba(255,180,238,.7);
+  }
+
+  .summary h2{
+    text-align:center;
+    margin:0 0 18px;
+    font-family:"Press Start 2P",monospace;
+    font-size:clamp(15px,3vw,23px);
+  }
+
+  .summary p{
+    font-size:1.15rem;
+    margin:10px 0;
+    color:#bd62b8;
+  }
+
+  .tag{
+    display:inline-block;
+    padding:6px 10px;
+    margin:4px 3px;
+    border-radius:999px;
+    background:#ffd9f6;
+    color:#ad4ba8;
+    border:2px solid #ffb4eb;
+  }
+
+  .top{
+    position:fixed;
+    right:18px;
+    bottom:18px;
+    z-index:5;
+    border:3px solid #fff;
+    background:#ff9ce5;
+    color:#fff;
+    border-radius:50%;
+    width:48px;height:48px;
+    font-size:20px;
+    cursor:pointer;
+    box-shadow:0 5px 0 #a83b96;
+  }
+
+  .footer{
+    text-align:center;
+    margin-top:24px;
+    opacity:.8;
+    font-size:1rem;
+  }
+
+  @media(max-width:700px){
+    .grid{grid-template-columns:1fr}
+    .card.full{grid-column:auto}
+    .hero{min-height:150px}
+    .hero-box{padding:28px 16px}
+    .silhouette{width:70%;right:-20%}
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    *{scroll-behavior:auto!important}
+  }
+
+  /* ===== Extra cute effects ===== */
+  .sparkles{position:fixed;inset:0;pointer-events:none;z-index:10;overflow:hidden}
+  .sparkle{
+    position:absolute;
+    color:#fff;
+    font-size:clamp(10px,2vw,20px);
+    opacity:.75;
+    animation:floatSparkle linear infinite;
+    filter:drop-shadow(0 0 7px #ffd8f7);
+  }
+  @keyframes floatSparkle{
+    0%{transform:translateY(110vh) rotate(0) scale(.5);opacity:0}
+    15%{opacity:.8}
+    80%{opacity:.7}
+    100%{transform:translateY(-15vh) rotate(300deg) scale(1.15);opacity:0}
+  }
+
+  .heart{
+    position:fixed;
+    pointer-events:none;
+    z-index:30;
+    color:#fff;
+    text-shadow:0 0 10px #ff8ddd;
+    animation:heartPop 900ms ease-out forwards;
+  }
+  @keyframes heartPop{
+    0%{transform:translate(-50%,-50%) scale(.4) rotate(-10deg);opacity:0}
+    20%{opacity:1}
+    100%{transform:translate(-50%, -150px) scale(1.25) rotate(18deg);opacity:0}
+  }
+
+  .clickable{
+    cursor:pointer;
+    transition:transform .18s ease, filter .18s ease;
+  }
+  .clickable:active{transform:scale(.94) rotate(-2deg);filter:brightness(1.2)}
+
+  .hero-box,.card,.summary{
+    animation:softAppear .8s ease both;
+  }
+  .card:nth-child(2){animation-delay:.08s}
+  .card:nth-child(3){animation-delay:.16s}
+  .card:nth-child(4){animation-delay:.24s}
+  .card:nth-child(5){animation-delay:.32s}
+  .summary{animation-delay:.4s}
+
+  @keyframes softAppear{
+    from{opacity:0;transform:translateY(18px) scale(.98)}
+    to{opacity:1;transform:translateY(0) scale(1)}
+  }
+
+  /* custom cursor only on devices that have a mouse */
+  @media (pointer:fine){
+    body{cursor:default}
+    .wiggle{cursor:pointer}
+  }
+
+
+  /* ===== Static typography ===== */
+  .wiggle{
+    display:inline-block;
+    animation:none !important;
+    transform:none !important;
+  }
+  .wiggle:hover{
+    animation:none !important;
+    transform:none !important;
+    cursor:pointer;
+  }
+
+  /* ===== Detail modal ===== */
+  .detail-overlay{
+    position:fixed;
+    inset:0;
+    z-index:100;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:18px;
+    background:rgba(70,0,62,.68);
+    backdrop-filter:blur(8px);
+  }
+  .detail-overlay.open{display:flex}
+
+  .detail-modal{
+    width:min(850px,96vw);
+    max-height:88vh;
+    overflow:auto;
+    background:#fffaff;
+    color:#71306d;
+    border:5px solid #fff;
+    border-radius:28px;
+    box-shadow:0 0 0 3px #ff9ee7,0 18px 60px rgba(55,0,48,.45);
+    padding:26px;
+    position:relative;
+  }
+  .detail-modal h2{
+    color:#c650ba;
+    margin:0 48px 18px 0;
+    font-size:clamp(22px,4vw,32px);
+    line-height:1.25;
+  }
+  .detail-modal h3{
+    color:#b447aa;
+    margin:20px 0 8px;
+    font-size:1.18rem;
+  }
+  .detail-modal p{
+    margin:8px 0 12px;
+    line-height:1.7;
+    font-size:1.03rem;
+  }
+  .detail-modal ul{
+    margin:7px 0 14px 22px;
+    padding:0;
+  }
+  .detail-modal li{
+    margin:8px 0;
+    line-height:1.65;
+  }
+  .detail-close{
+    position:absolute;
+    top:13px;
+    right:15px;
+    width:40px;
+    height:40px;
+    border:2px solid #ffb4eb;
+    border-radius:50%;
+    background:#ffd9f6;
+    color:#a8449f;
+    font-size:24px;
+    cursor:pointer;
+  }
+  .detail-hint{
+    font-size:.92rem;
+    color:#c678be;
+    margin-top:8px;
+  }
+  .click-detail{cursor:pointer}
+  .click-detail:hover{
+    text-decoration:underline;
+    text-decoration-color:#ff9ddd;
+    text-underline-offset:4px;
+  }
+
+</style>
+</head>
+
+<body>
+<main class="wrap" id="top">
+  <section class="hero">
+    <div class="silhouette"></div>
+    <div class="hero-box">
+      <h1 class="wiggle">PERSONALITY PROFILE</h1>
+      <div class="subtitle wiggle">♡ welcome to my little profile ♡</div>
+    </div>
+  </section>
+
+  <section class="grid">
+
+    <article class="card">
+      <h2 class="wiggle click-detail" data-detail="mbti">【 MBTI / Cognitive 】</h2>
+      <span class="line wiggle"><span class="label">MBTI:</span> <span class="value">ENTP</span></span>
+      <span class="line wiggle"><span class="label">Cognitive Functions:</span> <span class="value">Ne-Ti-Fe-Si</span></span>
+      <span class="line wiggle"><span class="label">Socionics:</span> <span class="value">ILE</span></span>
+    </article>
+
+    <article class="card">
+      <h2 class="wiggle click-detail" data-detail="enneagram">【 Enneagram 】</h2>
+      <span class="line wiggle"><span class="label">Enneagram:</span> <span class="value">7w6</span></span>
+      <span class="line wiggle"><span class="label">Subtype:</span> <span class="value">Sp7</span></span>
+      <span class="line wiggle"><span class="label">Tritype:</span> <span class="value">739</span></span>
+      <span class="line wiggle"><span class="label">Instinctual Stacking:</span> <span class="value">sp/so</span></span>
+    </article>
+
+    <article class="card">
+      <h2 class="wiggle click-detail" data-detail="temperament">【 Temperament / Traits 】</h2>
+      <span class="line wiggle"><span class="label">Temperament:</span> <span class="value">Sanguine-Phlegmatic</span></span>
+      <span class="line wiggle"><span class="label">Big Five:</span> <span class="value">O↑ E↑ A↗ C↘ N↗</span></span>
+    </article>
+
+    <article class="card">
+      <h2 class="wiggle click-detail" data-detail="other">【 Other Typology 】</h2>
+      <span class="line wiggle"><span class="label">Psychosophy:</span> <span class="value">FELV</span></span>
+      <span class="line wiggle"><span class="label">Conflictology:</span> <span class="value">PE</span></span>
+      <span class="line wiggle"><span class="label">Moral Alignment:</span> <span class="value">Chaotic Good</span></span>
+      <span class="line wiggle"><span class="label">Spiral Dynamics:</span> <span class="value">Green-Yellow</span></span>
+    </article>
+
+    <article class="card full">
+      <h2 class="wiggle click-detail" data-detail="additional">【 Additional 】</h2>
+      <span class="line wiggle"><span class="label">Attachment:</span> <span class="value">Anxious-leaning</span></span>
+      <span class="line wiggle"><span class="label">Dark Triad:</span> <span class="value">Low / No strong indication</span></span>
+      <span class="line wiggle"><span class="label">HEXACO:</span> <span class="value">H↑ E↗ X↑ A↗ C↘ O↑</span></span>
+    </article>
+
+  </section>
+
+  <section class="summary">
+    <h2 class="wiggle click-detail" data-detail="summary">CORE SUMMARY</h2>
+    <p class="wiggle">
+      <span class="tag">ENTP</span>
+      <span class="tag">7w6</span>
+      <span class="tag">Sp7</span>
+      <span class="tag">739</span>
+      <span class="tag">sp/so</span>
+      <span class="tag">ILE</span>
+    </p>
+    <p class="wiggle">
+      <span class="tag">Sanguine-Phlegmatic</span>
+      <span class="tag">O↑</span>
+      <span class="tag">E↑</span>
+      <span class="tag">A↗</span>
+      <span class="tag">C↘</span>
+      <span class="tag">N↗</span>
+    </p>
+    <p class="wiggle">
+      <span class="tag">FELV</span>
+      <span class="tag">PE</span>
+      <span class="tag">Chaotic Good</span>
+    </p>
+  </section>
+
+  <div class="footer wiggle">♡ Click each section to read the details ♡</div>
+</main>
+
+<button class="top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="กลับขึ้นด้านบน">↑</button>
+
+
+
+
+<div class="detail-overlay" id="detailOverlay" aria-hidden="true">
+  <section class="detail-modal" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+    <button class="detail-close" id="detailClose" aria-label="ปิด">×</button>
+    <h2 id="detailTitle">รายละเอียด</h2>
+    <div id="detailContent"></div>
+    <div class="detail-hint">Click × or outside the box to close</div>
+  </section>
+</div>
+
+<script>
+const detailData = {
+  mbti: {
+    title: "【 MBTI / Cognitive 】",
+    html: `
+      <p>This section describes the way the profile processes information and approaches ideas. The main pattern here is <b>ENTP / ILE</b> with the cognitive function order <b>Ne-Ti-Fe-Si</b>.</p>
+      <h3>ENTP — Ne-Ti-Fe-Si</h3>
+      <ul>
+        <li><b>Ne (Extraverted Intuition):</b> Explores possibilities, connects ideas, notices alternative perspectives, and enjoys discovering new ways to look at a problem.</li>
+        <li><b>Ti (Introverted Thinking):</b> Examines logic, internal consistency, definitions, and how things work. This often creates a natural tendency to question assumptions.</li>
+        <li><b>Fe (Extraverted Feeling):</b> Pays attention to the social atmosphere and other people's feelings, allowing communication to be adjusted to different people and situations.</li>
+        <li><b>Si (Introverted Sensing):</b> Connects with past experience, familiar details, routines, and physical comfort.</li>
+      </ul>
+      <h3>ILE — Socionics</h3>
+      <p>ILE is the Socionics type associated with exploring new concepts, generating hypotheses, and opening up many possible interpretations.</p>
+      <p><b>Overall:</b> This part of the profile emphasizes curiosity, analytical thinking, experimentation, and flexibility rather than following one fixed framework.</p>
+    `
+  },
+
+  enneagram: {
+    title: "【 Enneagram 】",
+    html: `
+      <h3>7w6 — The Enthusiast with a 6 Wing</h3>
+      <p>Type 7 is commonly associated with seeking experiences, possibilities, freedom, and ways to avoid feeling trapped or restricted. The 6 wing adds themes of security, preparation, risk awareness, and the importance of trusted people or groups.</p>
+      <h3>Sp7 — Self-Preservation 7</h3>
+      <p>In instinctual-subtype descriptions, Sp7 tends to place greater emphasis on security, comfort, resources, and creating a stable personal environment. This can make the Type 7 style appear more grounded and practical than a highly stimulation-seeking version of 7.</p>
+      <h3>Tritype 739</h3>
+      <p>739 combines themes from Types 7, 3, and 9: exploration and possibilities (7), effectiveness and achievement (3), and harmony or avoiding unnecessary conflict (9).</p>
+      <h3>sp/so — Instinctual Stacking</h3>
+      <p>This stacking places greater emphasis on personal security and resources first, followed by social connection, group dynamics, and one's place within a wider community.</p>
+    `
+  },
+
+  temperament: {
+    title: "【 Temperament / Traits 】",
+    html: `
+      <h3>Sanguine-Phlegmatic</h3>
+      <p>Sanguine adds friendliness, adaptability, social energy, curiosity, and interest in new experiences. Phlegmatic adds calmness, flexibility, patience, and a lower need for intense conflict. Together, they can describe someone who is socially capable without needing to be constantly intense or high-energy.</p>
+      <h3>Big Five</h3>
+      <p><b>O↑ — Openness:</b> More receptive to new ideas, perspectives, and experiences.</p>
+      <p><b>E↑ — Extraversion:</b> Greater tendency toward outward engagement, social interaction, and activity.</p>
+      <p><b>A↗ — Agreeableness:</b> Greater tendency toward cooperation, consideration, and interpersonal harmony.</p>
+      <p><b>C↘ — Conscientiousness:</b> More flexible and less naturally attached to rigid systems, schedules, or strict structure.</p>
+      <p><b>N↗ — Neuroticism:</b> Greater sensitivity to worry, uncertainty, or emotional fluctuations.</p>
+      <p>Big Five traits are dimensions rather than fixed categories, so different traits can coexist without creating a contradiction.</p>
+    `
+  },
+
+  other: {
+    title: "【 Other Typology 】",
+    html: `
+      <h3>Psychosophy: FELV</h3>
+      <p>Using the interpretation represented by this profile: <b>1F</b> emphasizes physical comfort and tangible matters; <b>2E</b> emphasizes emotional exchange and awareness of interpersonal atmosphere; <b>3L</b> relates to questioning, testing, and discussing ideas; and <b>4V</b> suggests less of a need to constantly assert personal will or control other people.</p>
+      <h3>Conflictology: PE</h3>
+      <p>Within the relevant Conflictology framework, PE describes a particular way of responding to disagreement. It is best interpreted alongside real behavior rather than treated as a fixed judgment about someone's personality.</p>
+      <h3>Moral Alignment: Chaotic Good</h3>
+      <p>In the alignment framework, Chaotic Good generally describes valuing positive intentions and helping others while not feeling obligated to follow every rule or established system.</p>
+      <h3>Spiral Dynamics: Green-Yellow</h3>
+      <p>This framework describes themes in values and worldview. Green is commonly associated with empathy, equality, inclusion, and relationships, while Yellow is commonly associated with systems thinking, complexity, and flexible problem-solving.</p>
+    `
+  },
+
+  additional: {
+    title: "【 Additional 】",
+    html: `
+      <h3>Anxious-Leaning Attachment + N↗</h3>
+      <p>These two parts can describe greater sensitivity to relationships, acceptance, uncertainty, or the possibility of losing connection. At the same time, 7w6 and Sp7 can represent another side that seeks options, preparation, comfort, or security when dealing with uncertainty.</p>
+      <h3>Dark Triad: Low / No Strong Indication</h3>
+      <p>This means the provided profile does not show a strong indication of Dark Triad traits. It should not be treated as a clinical assessment or diagnosis.</p>
+      <h3>HEXACO</h3>
+      <p><b>H↑ — Honesty-Humility:</b> Higher · <b>E↗ — Emotionality:</b> Higher · <b>X↑ — Extraversion:</b> Higher · <b>A↗ — Agreeableness:</b> Higher · <b>C↘ — Conscientiousness:</b> Lower · <b>O↑ — Openness:</b> Higher.</p>
+      <p>Taken together, this can describe someone who is open to ideas and people, while also being sensitive to relationships and preferring flexibility in everyday life.</p>
+    `
+  },
+
+  summary: {
+    title: "💡 Personality Overview",
+    html: `
+      <p>The personality profile provided does not necessarily contain major contradictions. Instead, it represents a <b>highly distinctive combination of traits</b> that can be understood as different dimensions of the same person.</p>
+
+      <h3>1. ENTP (Ne-Ti) + Sp7 + 739 + Sanguine-Phlegmatic</h3>
+      <p><b>What may look contradictory:</b> ENTP is often stereotyped as highly energetic, provocative, impulsive, or constantly ready to debate. However, Sp7, 739, and a Phlegmatic temperament can create a noticeably calmer presentation.</p>
+      <p><b>How they can fit together:</b> Sp7 emphasizes security, comfort, and practical resources. The 9 influence can add a preference for peace and lower levels of unnecessary confrontation, while Phlegmatic traits can make the overall presentation more relaxed. This can create a more <b>grounded and laid-back ENTP</b> rather than an aggressively high-energy stereotype.</p>
+
+      <h3>2. A↗ + H↑ + Chaotic Good</h3>
+      <p><b>What may look contradictory:</b> Some stereotypes portray ENTPs as people who debate simply to win or deliberately provoke others.</p>
+      <p><b>How they can fit together:</b> Fe, higher Agreeableness, and higher Honesty-Humility can add cooperation, empathy, and consideration for others. In that case, Ne-Ti can be used not only for debate, but also for solving problems, generating useful ideas, helping people, or improving the atmosphere around them.</p>
+
+      <h3>3. Psychosophy: FELV vs. ENTP / Ti</h3>
+      <p><b>What may look contradictory:</b> ENTP is associated with Ti, while FELV places Logic in the third position.</p>
+      <p><b>How they can fit together:</b> 3L does not mean “bad at logic.” Within Psychosophy, it can instead describe a more questioning and exploratory relationship with logic — someone who likes to test ideas, challenge assumptions, and exchange perspectives rather than accepting one rigid conclusion.</p>
+      <ul>
+        <li><b>1F:</b> Can connect with physical comfort, tangible resources, and practical concerns.</li>
+        <li><b>2E:</b> Can connect with emotional awareness and interpersonal expression.</li>
+        <li><b>3L:</b> Can connect with questioning, analyzing, and testing ideas.</li>
+        <li><b>4V:</b> Can connect with having less need to control everything through personal willpower.</li>
+      </ul>
+
+      <h3>4. Anxious-Leaning Attachment + N↗ vs. 7w6 & Sp7</h3>
+      <p><b>What may look contradictory:</b> Type 7 is often associated with moving away from painful feelings or situations that feel limiting, while an anxious-leaning attachment style and higher Neuroticism can indicate greater sensitivity to uncertainty.</p>
+      <p><b>How they can fit together:</b> The 6 wing and Sp7 can add caution, preparation, and a stronger desire for security. This means the desire for new possibilities and the desire for safety can coexist. New ideas, activities, and alternative options may sometimes function as ways of coping with uncertainty.</p>
+
+      <h3>🌷 Overall Personality</h3>
+      <p><b>“The Friendly & Practical Visionary”</b></p>
+      <ul>
+        <li>Creative, curious, observant, and naturally interested in possibilities through ENTP / ILE.</li>
+        <li>Approachable, cooperative, and more considerate of others through A↗, H↑, Fe, 7w6, and the 9 influence.</li>
+        <li>Comfort-oriented, flexible, and less interested in rigid pressure through 1F, 4V, C↘, and Phlegmatic traits.</li>
+        <li>Potentially sensitive to relationships and uncertainty through Anxious-Leaning Attachment and N↗.</li>
+      </ul>
+
+      <p><b>In short:</b> The different systems are describing different dimensions of personality, so they can be layered together into one overall picture. They should be treated as personality frameworks for interpretation rather than absolute proof of who someone is.</p>
+    `
+  }
+};
+
+const overlay = document.getElementById('detailOverlay');
+const title = document.getElementById('detailTitle');
+const content = document.getElementById('detailContent');
+const closeBtn = document.getElementById('detailClose');
+
+function openDetail(key){
+  const item = detailData[key];
+  if(!item) return;
+  title.textContent = item.title;
+  content.innerHTML = item.html;
+  overlay.classList.add('open');
+  overlay.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+}
+
+function closeDetail(){
+  overlay.classList.remove('open');
+  overlay.setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+}
+
+document.querySelectorAll('[data-detail]').forEach(el=>{
+  el.addEventListener('click',()=>openDetail(el.dataset.detail));
+});
+
+closeBtn.addEventListener('click',closeDetail);
+overlay.addEventListener('click',(e)=>{
+  if(e.target === overlay) closeDetail();
+});
+document.addEventListener('keydown',(e)=>{
+  if(e.key === 'Escape') closeDetail();
+});
+</script>
+
+</body>
+</html>
